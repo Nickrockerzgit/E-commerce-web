@@ -288,6 +288,9 @@ export default function PaymentGateway() {
       let deepLink = `upi://pay?pa=${encodeURIComponent(payeeAddress)}&pn=${encodeURIComponent(payeeName)}&am=${amount}&cu=${currency}&tn=${encodeURIComponent(transactionNote)}&tr=${encodeURIComponent(transactionRef)}&mc=${encodeURIComponent(MERCHANT_CODE)}&url=${encodeURIComponent(CALLBACK_URL)}`;
       if (sign) deepLink += `&sign=${encodeURIComponent(sign)}`;
 
+      
+        console.log('Generated deepLink:', deepLink);  
+
       setDeepLinkForQR(deepLink); // QR के लिए सेव
 
       // Device चेक
@@ -314,6 +317,7 @@ export default function PaymentGateway() {
       navigate('/');
     }
   };
+
 
   const paymentMethods = [
     {
