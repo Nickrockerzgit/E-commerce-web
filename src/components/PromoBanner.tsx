@@ -1,4 +1,4 @@
-import bannerImg from '../../../project/dist/assets/below img.avif';
+import bannerImg from '../assets/below img.avif';
 
 export default function TopOfferBanner() {
   return (

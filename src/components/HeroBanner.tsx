@@ -2,21 +2,21 @@
 import { useEffect, useState } from 'react';
 
 // 🔹 Carousel images (assets folder)
-import slide1 from '../../../project/dist/assets/carousel img 2.webp';
-import slide2 from '../../../project/dist/assets/carousel img.avif';
-import slide3 from '../../../project/dist/assets/carousel img 3.avif';
-import slide4 from '../../../project/dist/assets/carousel img 4.avif';
-import slide5 from '../../../project/dist/assets/carousel img 5.avif';
-import slide6 from '../../../project/dist/assets/carousel img 6.avif';
-import slide7 from '../../../project/dist/assets/carousel img 7.avif';
-import slide8 from '../../../project/dist/assets/carousel img 8.avif';
-import slide9 from '../../../project/dist/assets/carousel img 9.avif';
-import slide10 from '../../../project/dist/assets/carousel img 10.avif';
-import slide11 from '../../../project/dist/assets/carousel 11.avif';
+import slide1 from '../assets/carousel img 2.webp';
+import slide2 from '../assets/carousel img.avif';
+import slide3 from '../assets/carousel img 3.avif';
+import slide4 from '../assets/carousel img 4.avif';
+import slide5 from '../assets/carousel img 5.avif';
+import slide6 from '../assets/carousel img 6.avif';
+import slide7 from '../assets/carousel img 7.avif';
+import slide8 from '../assets/carousel img 8.avif';
+import slide9 from '../assets/carousel img 9.avif';
+import slide10 from '../assets/carousel img 10.avif';
+import slide11 from '../assets/carousel 11.avif';
 
-import appStore from '../../../project/dist/assets/combine app and play.png';
-import qrCode from '../../../project/dist/assets/daraz scanner.avif';
-import darazLogo from '../../../project/dist/assets/daraj logo.avif';
+import appStore from '../assets/combine app and play.png';
+import qrCode from '../assets/daraz scanner.avif';
+import darazLogo from '../assets/daraj logo.avif';
 
 
 const carouselImages = [

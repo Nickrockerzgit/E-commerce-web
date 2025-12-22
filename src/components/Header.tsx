@@ -1,5 +1,5 @@
 import { Search, ShoppingCart } from 'lucide-react';
-import logo from '../../../project/dist/assets/d logo.png'; // 👈 apna correct path rakhein
+import logo from '../assets/d logo.png'; // 👈 apna correct path rakhein
 
 export default function Header() {
   return (
