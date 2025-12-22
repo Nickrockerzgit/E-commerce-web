@@ -269,6 +269,213 @@
 //     </div>
 //   );
 // }
+// ye rhne de 
+
+
+
+
+
+
+
+// ye vala block ho rha hai bar bar 
+// import { useLocation, useNavigate } from 'react-router-dom';
+// import { useState } from 'react';
+// import { ChevronRight, Banknote } from 'lucide-react';
+
+// interface Product {
+//   image: string;
+//   title: string;
+//   price: number;
+// }
+
+// interface LocationState {
+//   product: Product;
+//   quantity: number;
+//   totalAmount: number;
+// }
+
+// export default function PaymentGateway() {
+//   const location = useLocation();
+//   const navigate = useNavigate();
+//   const { product, quantity, totalAmount } =
+//     location.state as LocationState;
+
+//   // ✅ NORMAL P2P UPI (PERSONAL)
+//   const UPI_ID =
+//     import.meta.env.VITE_UPI_ID || 'rishabhjhade@ybl';
+
+//   const [isLoading, setIsLoading] = useState(false);
+//   const [showQR, setShowQR] = useState(false);
+//   const [upiLinkForQR, setUpiLinkForQR] = useState('');
+
+//   const handleUPIPayment = () => {
+//     setIsLoading(true);
+
+//     const amount = totalAmount.toFixed(2);
+
+//     // ✅ PURE P2P UPI LINK (NO MERCHANT PARAMS)
+//     const upiLink = `upi://pay?pa=${encodeURIComponent(
+//       UPI_ID
+//     )}&am=${amount}&cu=INR`;
+
+//     console.log('UPI LINK:', upiLink);
+//     setUpiLinkForQR(upiLink);
+
+//     const isMobile = /Android|iPhone|iPad/i.test(
+//       navigator.userAgent
+//     );
+
+//     if (isMobile) {
+//       window.location.href = upiLink;
+//     } else {
+//       setShowQR(true);
+//     }
+
+//     setIsLoading(false);
+//   };
+
+//   const handleCOD = () => {
+//     alert('Order placed successfully with Cash on Delivery');
+//     navigate('/');
+//   };
+
+//   const paymentMethods = [
+//     {
+//       id: 'gpay',
+//       name: 'Google Pay',
+//       subtitle: 'UPI Payment',
+//       icon: 'https://www.gstatic.com/images/branding/product/1x/gpay_48dp.png',
+//       action: handleUPIPayment,
+//     },
+//     {
+//       id: 'phonepe',
+//       name: 'PhonePe',
+//       subtitle: 'UPI Payment',
+//       icon: 'https://www.phonepe.com/static/media/phonepe-logo.4c3b9b3b.svg',
+//       action: handleUPIPayment,
+//     },
+//     {
+//       id: 'cod',
+//       name: 'Cash on Delivery',
+//       subtitle: 'Pay when product arrives',
+//       icon: null,
+//       action: handleCOD,
+//     },
+//   ];
+
+//   return (
+//     <div className="min-h-screen bg-gray-50 p-6">
+//       <div className="max-w-3xl mx-auto bg-white rounded-lg shadow">
+
+//         {/* HEADER */}
+//         <div className="border-b px-6 py-4">
+//           <h1 className="text-2xl font-bold">
+//             Select Payment Method
+//           </h1>
+//         </div>
+
+//         {/* PAYMENT METHODS */}
+//         <div className="divide-y">
+//           {paymentMethods.map((method) => (
+//             <button
+//               key={method.id}
+//               onClick={method.action}
+//               disabled={isLoading}
+//               className="w-full flex items-center justify-between px-6 py-5 hover:bg-gray-100"
+//             >
+//               <div className="flex items-center gap-4">
+//                 <div className="w-14 h-14 bg-gray-100 rounded flex items-center justify-center">
+//                   {method.icon ? (
+//                     <img
+//                       src={method.icon}
+//                       alt={method.name}
+//                       className="w-10"
+//                     />
+//                   ) : (
+//                     <Banknote className="w-8 h-8" />
+//                   )}
+//                 </div>
+
+//                 <div className="text-left">
+//                   <h3 className="text-lg font-semibold">
+//                     {method.name}
+//                   </h3>
+//                   <p className="text-sm text-gray-500">
+//                     {method.subtitle}
+//                   </p>
+//                 </div>
+//               </div>
+
+//               <ChevronRight />
+//             </button>
+//           ))}
+//         </div>
+
+//         {/* ORDER SUMMARY */}
+//         <div className="p-6 border-t">
+//           <h2 className="font-semibold mb-4">
+//             Order Summary
+//           </h2>
+
+//           <div className="flex gap-4">
+//             <img
+//               src={product.image}
+//               alt={product.title}
+//               className="w-24 h-24 object-cover rounded"
+//             />
+//             <div>
+//               <p className="font-medium">{product.title}</p>
+//               <p className="text-sm text-gray-600">
+//                 Quantity: {quantity}
+//               </p>
+//               <p className="text-sm text-gray-600">
+//                 Price: ₹{product.price}
+//               </p>
+//             </div>
+//           </div>
+//         </div>
+
+//         {/* TOTAL */}
+//         <div className="px-6 py-4 border-t bg-gray-50 flex justify-between text-lg font-bold">
+//           <span>Total</span>
+//           <span className="text-orange-600">
+//             ₹{totalAmount}
+//           </span>
+//         </div>
+//       </div>
+
+//       {/* QR MODAL */}
+//       {showQR && (
+//         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+//           <div className="bg-white p-6 rounded max-w-sm w-full text-center">
+//             <h3 className="font-bold text-lg mb-3">
+//               Scan with UPI App
+//             </h3>
+
+//             {/* QR CODE YAHAN LAG SAKTA HAI */}
+//             {/* <QRCode value={upiLinkForQR} size={200} /> */}
+
+//             <p className="text-sm text-gray-600 mt-2">
+//               Google Pay / PhonePe se scan kare
+//             </p>
+
+//             <button
+//               onClick={() => setShowQR(false)}
+//               className="mt-4 w-full bg-gray-700 text-white py-2 rounded"
+//             >
+//               Close
+//             </button>
+//           </div>
+//         </div>
+//       )}
+//     </div>
+//   );
+// }
+
+
+
+
+
 
 
 
@@ -297,171 +504,105 @@ interface LocationState {
 export default function PaymentGateway() {
   const location = useLocation();
   const navigate = useNavigate();
-  const { product, quantity, totalAmount } =
-    location.state as LocationState;
+  const { product, quantity, totalAmount } = location.state as LocationState;
 
-  // ✅ NORMAL P2P UPI (PERSONAL)
-  const UPI_ID =
-    import.meta.env.VITE_UPI_ID || 'rishabhjhade@ybl';
+  // 🔴 NORMAL UPI (NO MERCHANT)
+  const UPI_ID = 'rishabhjhade@ybl';
+  const PAYEE_NAME = 'Rishabh Jhade';
 
-  const [isLoading, setIsLoading] = useState(false);
   const [showQR, setShowQR] = useState(false);
-  const [upiLinkForQR, setUpiLinkForQR] = useState('');
+  const [upiLink, setUpiLink] = useState('');
 
   const handleUPIPayment = () => {
-    setIsLoading(true);
-
     const amount = totalAmount.toFixed(2);
+    const note = `${product.title} (${quantity})`;
 
-    // ✅ PURE P2P UPI LINK (NO MERCHANT PARAMS)
-    const upiLink = `upi://pay?pa=${encodeURIComponent(
+    const link = `upi://pay?pa=${encodeURIComponent(
       UPI_ID
-    )}&am=${amount}&cu=INR`;
+    )}&pn=${encodeURIComponent(
+      PAYEE_NAME
+    )}&am=${amount}&cu=INR&tn=${encodeURIComponent(note)}`;
 
-    console.log('UPI LINK:', upiLink);
-    setUpiLinkForQR(upiLink);
+    console.log('UPI LINK:', link);
+    setUpiLink(link);
 
-    const isMobile = /Android|iPhone|iPad/i.test(
-      navigator.userAgent
-    );
+    // 🔥 TRY DIRECT APP OPEN (BEST EFFORT)
+    if (/Android|iPhone/i.test(navigator.userAgent)) {
+      window.location.href = link;
 
-    if (isMobile) {
-      window.location.href = upiLink;
+      // 🔁 FAIL SAFE → QR
+      setTimeout(() => {
+        setShowQR(true);
+      }, 2500);
     } else {
       setShowQR(true);
     }
-
-    setIsLoading(false);
   };
 
   const handleCOD = () => {
-    alert('Order placed successfully with Cash on Delivery');
+    alert('Order placed with Cash on Delivery');
     navigate('/');
   };
 
-  const paymentMethods = [
-    {
-      id: 'gpay',
-      name: 'Google Pay',
-      subtitle: 'UPI Payment',
-      icon: 'https://www.gstatic.com/images/branding/product/1x/gpay_48dp.png',
-      action: handleUPIPayment,
-    },
-    {
-      id: 'phonepe',
-      name: 'PhonePe',
-      subtitle: 'UPI Payment',
-      icon: 'https://www.phonepe.com/static/media/phonepe-logo.4c3b9b3b.svg',
-      action: handleUPIPayment,
-    },
-    {
-      id: 'cod',
-      name: 'Cash on Delivery',
-      subtitle: 'Pay when product arrives',
-      icon: null,
-      action: handleCOD,
-    },
-  ];
-
   return (
     <div className="min-h-screen bg-gray-50 p-6">
-      <div className="max-w-3xl mx-auto bg-white rounded-lg shadow">
+      <div className="max-w-3xl mx-auto bg-white rounded shadow">
 
-        {/* HEADER */}
         <div className="border-b px-6 py-4">
-          <h1 className="text-2xl font-bold">
-            Select Payment Method
-          </h1>
+          <h1 className="text-2xl font-bold">Select Payment Method</h1>
         </div>
 
-        {/* PAYMENT METHODS */}
-        <div className="divide-y">
-          {paymentMethods.map((method) => (
-            <button
-              key={method.id}
-              onClick={method.action}
-              disabled={isLoading}
-              className="w-full flex items-center justify-between px-6 py-5 hover:bg-gray-100"
-            >
-              <div className="flex items-center gap-4">
-                <div className="w-14 h-14 bg-gray-100 rounded flex items-center justify-center">
-                  {method.icon ? (
-                    <img
-                      src={method.icon}
-                      alt={method.name}
-                      className="w-10"
-                    />
-                  ) : (
-                    <Banknote className="w-8 h-8" />
-                  )}
-                </div>
-
-                <div className="text-left">
-                  <h3 className="text-lg font-semibold">
-                    {method.name}
-                  </h3>
-                  <p className="text-sm text-gray-500">
-                    {method.subtitle}
-                  </p>
-                </div>
-              </div>
-
-              <ChevronRight />
-            </button>
-          ))}
-        </div>
-
-        {/* ORDER SUMMARY */}
-        <div className="p-6 border-t">
-          <h2 className="font-semibold mb-4">
-            Order Summary
-          </h2>
-
-          <div className="flex gap-4">
-            <img
-              src={product.image}
-              alt={product.title}
-              className="w-24 h-24 object-cover rounded"
-            />
-            <div>
-              <p className="font-medium">{product.title}</p>
-              <p className="text-sm text-gray-600">
-                Quantity: {quantity}
-              </p>
-              <p className="text-sm text-gray-600">
-                Price: ₹{product.price}
-              </p>
-            </div>
+        <button
+          onClick={handleUPIPayment}
+          className="w-full flex items-center justify-between px-6 py-5 hover:bg-gray-100"
+        >
+          <div>
+            <h3 className="text-lg font-semibold">UPI (GPay / PhonePe)</h3>
+            <p className="text-sm text-gray-500">
+              Pay ₹{totalAmount} to {UPI_ID}
+            </p>
           </div>
-        </div>
+          <ChevronRight />
+        </button>
 
-        {/* TOTAL */}
-        <div className="px-6 py-4 border-t bg-gray-50 flex justify-between text-lg font-bold">
-          <span>Total</span>
-          <span className="text-orange-600">
-            ₹{totalAmount}
-          </span>
+        <button
+          onClick={handleCOD}
+          className="w-full flex items-center justify-between px-6 py-5 hover:bg-gray-100"
+        >
+          <div>
+            <h3 className="text-lg font-semibold">Cash on Delivery</h3>
+            <p className="text-sm text-gray-500">Pay after delivery</p>
+          </div>
+          <Banknote />
+        </button>
+
+        <div className="p-6 border-t">
+          <p className="font-semibold">{product.title}</p>
+          <p>Qty: {quantity}</p>
+          <p>Total: ₹{totalAmount}</p>
         </div>
       </div>
 
-      {/* QR MODAL */}
+      {/* 🔳 QR FALLBACK */}
       {showQR && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white p-6 rounded max-w-sm w-full text-center">
-            <h3 className="font-bold text-lg mb-3">
-              Scan with UPI App
-            </h3>
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+          <div className="bg-white p-6 rounded text-center">
+            <h3 className="font-bold mb-3">Scan & Pay</h3>
 
-            {/* QR CODE YAHAN LAG SAKTA HAI */}
-            {/* <QRCode value={upiLinkForQR} size={200} /> */}
+            {/* Yaha apna STATIC QR IMAGE use karo */}
+            <img
+              src="/upi-qr.png"
+              alt="UPI QR"
+              className="w-52 mx-auto"
+            />
 
-            <p className="text-sm text-gray-600 mt-2">
-              Google Pay / PhonePe se scan kare
+            <p className="text-sm mt-2">
+              ₹{totalAmount} for {product.title}
             </p>
 
             <button
               onClick={() => setShowQR(false)}
-              className="mt-4 w-full bg-gray-700 text-white py-2 rounded"
+              className="mt-4 bg-gray-700 text-white px-4 py-2 rounded"
             >
               Close
             </button>
