@@ -278,11 +278,9 @@
 
 
 
-
-//this is my code 
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-import { ChevronRight, CreditCard, Banknote } from 'lucide-react';
+import { ChevronRight, Banknote } from 'lucide-react';
 
 interface Product {
   image: string;
@@ -299,12 +297,12 @@ interface LocationState {
 export default function PaymentGateway() {
   const location = useLocation();
   const navigate = useNavigate();
-  const { product, quantity, totalAmount } = location.state as LocationState;
+  const { product, quantity, totalAmount } =
+    location.state as LocationState;
 
-  // ✅ ENV VALUES (Vercel me add karna zaroori hai)
- const UPI_ID = import.meta.env.VITE_UPI_ID || 'rishabhjhade060-1@okicici';
-const PAYEE_NAME = import.meta.env.VITE_MERCHANT_NAME || 'Rishabh Jhade';
-
+  // ✅ NORMAL P2P UPI (PERSONAL)
+  const UPI_ID =
+    import.meta.env.VITE_UPI_ID || 'rishabhjhade@ybl';
 
   const [isLoading, setIsLoading] = useState(false);
   const [showQR, setShowQR] = useState(false);
@@ -314,29 +312,21 @@ const PAYEE_NAME = import.meta.env.VITE_MERCHANT_NAME || 'Rishabh Jhade';
     setIsLoading(true);
 
     const amount = totalAmount.toFixed(2);
-    const transactionNote = `${product.title} - Order Payment`;
-    const transactionRef = `ORDER_${Date.now()}`;
 
-    // ✅ CLEAN UPI LINK (NO MERCHANT PARAMS)
+    // ✅ PURE P2P UPI LINK (NO MERCHANT PARAMS)
     const upiLink = `upi://pay?pa=${encodeURIComponent(
       UPI_ID
-    )}&pn=${encodeURIComponent(
-      PAYEE_NAME
-    )}&am=${amount}&cu=INR&tn=${encodeURIComponent(
-      transactionNote
-    )}&tr=${transactionRef}`;
+    )}&am=${amount}&cu=INR`;
 
     console.log('UPI LINK:', upiLink);
     setUpiLinkForQR(upiLink);
 
-    // ✅ MOBILE CHECK
-    if (/Android|iPhone/i.test(navigator.userAgent)) {
-      const opened = window.location.href = upiLink;
+    const isMobile = /Android|iPhone|iPad/i.test(
+      navigator.userAgent
+    );
 
-      // fallback QR
-      setTimeout(() => {
-        setShowQR(true);
-      }, 3000);
+    if (isMobile) {
+      window.location.href = upiLink;
     } else {
       setShowQR(true);
     }
@@ -379,7 +369,9 @@ const PAYEE_NAME = import.meta.env.VITE_MERCHANT_NAME || 'Rishabh Jhade';
 
         {/* HEADER */}
         <div className="border-b px-6 py-4">
-          <h1 className="text-2xl font-bold">Select Payment Method</h1>
+          <h1 className="text-2xl font-bold">
+            Select Payment Method
+          </h1>
         </div>
 
         {/* PAYMENT METHODS */}
@@ -394,15 +386,23 @@ const PAYEE_NAME = import.meta.env.VITE_MERCHANT_NAME || 'Rishabh Jhade';
               <div className="flex items-center gap-4">
                 <div className="w-14 h-14 bg-gray-100 rounded flex items-center justify-center">
                   {method.icon ? (
-                    <img src={method.icon} alt={method.name} className="w-10" />
+                    <img
+                      src={method.icon}
+                      alt={method.name}
+                      className="w-10"
+                    />
                   ) : (
                     <Banknote className="w-8 h-8" />
                   )}
                 </div>
 
                 <div className="text-left">
-                  <h3 className="text-lg font-semibold">{method.name}</h3>
-                  <p className="text-sm text-gray-500">{method.subtitle}</p>
+                  <h3 className="text-lg font-semibold">
+                    {method.name}
+                  </h3>
+                  <p className="text-sm text-gray-500">
+                    {method.subtitle}
+                  </p>
                 </div>
               </div>
 
@@ -413,7 +413,9 @@ const PAYEE_NAME = import.meta.env.VITE_MERCHANT_NAME || 'Rishabh Jhade';
 
         {/* ORDER SUMMARY */}
         <div className="p-6 border-t">
-          <h2 className="font-semibold mb-4">Order Summary</h2>
+          <h2 className="font-semibold mb-4">
+            Order Summary
+          </h2>
 
           <div className="flex gap-4">
             <img
@@ -423,8 +425,12 @@ const PAYEE_NAME = import.meta.env.VITE_MERCHANT_NAME || 'Rishabh Jhade';
             />
             <div>
               <p className="font-medium">{product.title}</p>
-              <p className="text-sm text-gray-600">Quantity: {quantity}</p>
-              <p className="text-sm text-gray-600">Price: ₹{product.price}</p>
+              <p className="text-sm text-gray-600">
+                Quantity: {quantity}
+              </p>
+              <p className="text-sm text-gray-600">
+                Price: ₹{product.price}
+              </p>
             </div>
           </div>
         </div>
@@ -432,7 +438,9 @@ const PAYEE_NAME = import.meta.env.VITE_MERCHANT_NAME || 'Rishabh Jhade';
         {/* TOTAL */}
         <div className="px-6 py-4 border-t bg-gray-50 flex justify-between text-lg font-bold">
           <span>Total</span>
-          <span className="text-orange-600">₹{totalAmount}</span>
+          <span className="text-orange-600">
+            ₹{totalAmount}
+          </span>
         </div>
       </div>
 
@@ -440,9 +448,11 @@ const PAYEE_NAME = import.meta.env.VITE_MERCHANT_NAME || 'Rishabh Jhade';
       {showQR && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white p-6 rounded max-w-sm w-full text-center">
-            <h3 className="font-bold text-lg mb-3">Scan with UPI App</h3>
+            <h3 className="font-bold text-lg mb-3">
+              Scan with UPI App
+            </h3>
 
-            {/* QR Library laga sakte ho */}
+            {/* QR CODE YAHAN LAG SAKTA HAI */}
             {/* <QRCode value={upiLinkForQR} size={200} /> */}
 
             <p className="text-sm text-gray-600 mt-2">
