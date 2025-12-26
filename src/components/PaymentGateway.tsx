@@ -278,343 +278,6 @@
 
 
 // ye vala block ho rha hai bar bar 
-// import { useLocation, useNavigate } from 'react-router-dom';
-// import { useState } from 'react';
-// import { ChevronRight, Banknote } from 'lucide-react';
-
-// interface Product {
-//   image: string;
-//   title: string;
-//   price: number;
-// }
-
-// interface LocationState {
-//   product: Product;
-//   quantity: number;
-//   totalAmount: number;
-// }
-
-// export default function PaymentGateway() {
-//   const location = useLocation();
-//   const navigate = useNavigate();
-//   const { product, quantity, totalAmount } =
-//     location.state as LocationState;
-
-//   // ✅ NORMAL P2P UPI (PERSONAL)
-//   const UPI_ID =
-//     import.meta.env.VITE_UPI_ID || 'rishabhjhade@ybl';
-
-//   const [isLoading, setIsLoading] = useState(false);
-//   const [showQR, setShowQR] = useState(false);
-//   const [upiLinkForQR, setUpiLinkForQR] = useState('');
-
-//   const handleUPIPayment = () => {
-//     setIsLoading(true);
-
-//     const amount = totalAmount.toFixed(2);
-
-//     // ✅ PURE P2P UPI LINK (NO MERCHANT PARAMS)
-//     const upiLink = `upi://pay?pa=${encodeURIComponent(
-//       UPI_ID
-//     )}&am=${amount}&cu=INR`;
-
-//     console.log('UPI LINK:', upiLink);
-//     setUpiLinkForQR(upiLink);
-
-//     const isMobile = /Android|iPhone|iPad/i.test(
-//       navigator.userAgent
-//     );
-
-//     if (isMobile) {
-//       window.location.href = upiLink;
-//     } else {
-//       setShowQR(true);
-//     }
-
-//     setIsLoading(false);
-//   };
-
-//   const handleCOD = () => {
-//     alert('Order placed successfully with Cash on Delivery');
-//     navigate('/');
-//   };
-
-//   const paymentMethods = [
-//     {
-//       id: 'gpay',
-//       name: 'Google Pay',
-//       subtitle: 'UPI Payment',
-//       icon: 'https://www.gstatic.com/images/branding/product/1x/gpay_48dp.png',
-//       action: handleUPIPayment,
-//     },
-//     {
-//       id: 'phonepe',
-//       name: 'PhonePe',
-//       subtitle: 'UPI Payment',
-//       icon: 'https://www.phonepe.com/static/media/phonepe-logo.4c3b9b3b.svg',
-//       action: handleUPIPayment,
-//     },
-//     {
-//       id: 'cod',
-//       name: 'Cash on Delivery',
-//       subtitle: 'Pay when product arrives',
-//       icon: null,
-//       action: handleCOD,
-//     },
-//   ];
-
-//   return (
-//     <div className="min-h-screen bg-gray-50 p-6">
-//       <div className="max-w-3xl mx-auto bg-white rounded-lg shadow">
-
-//         {/* HEADER */}
-//         <div className="border-b px-6 py-4">
-//           <h1 className="text-2xl font-bold">
-//             Select Payment Method
-//           </h1>
-//         </div>
-
-//         {/* PAYMENT METHODS */}
-//         <div className="divide-y">
-//           {paymentMethods.map((method) => (
-//             <button
-//               key={method.id}
-//               onClick={method.action}
-//               disabled={isLoading}
-//               className="w-full flex items-center justify-between px-6 py-5 hover:bg-gray-100"
-//             >
-//               <div className="flex items-center gap-4">
-//                 <div className="w-14 h-14 bg-gray-100 rounded flex items-center justify-center">
-//                   {method.icon ? (
-//                     <img
-//                       src={method.icon}
-//                       alt={method.name}
-//                       className="w-10"
-//                     />
-//                   ) : (
-//                     <Banknote className="w-8 h-8" />
-//                   )}
-//                 </div>
-
-//                 <div className="text-left">
-//                   <h3 className="text-lg font-semibold">
-//                     {method.name}
-//                   </h3>
-//                   <p className="text-sm text-gray-500">
-//                     {method.subtitle}
-//                   </p>
-//                 </div>
-//               </div>
-
-//               <ChevronRight />
-//             </button>
-//           ))}
-//         </div>
-
-//         {/* ORDER SUMMARY */}
-//         <div className="p-6 border-t">
-//           <h2 className="font-semibold mb-4">
-//             Order Summary
-//           </h2>
-
-//           <div className="flex gap-4">
-//             <img
-//               src={product.image}
-//               alt={product.title}
-//               className="w-24 h-24 object-cover rounded"
-//             />
-//             <div>
-//               <p className="font-medium">{product.title}</p>
-//               <p className="text-sm text-gray-600">
-//                 Quantity: {quantity}
-//               </p>
-//               <p className="text-sm text-gray-600">
-//                 Price: ₹{product.price}
-//               </p>
-//             </div>
-//           </div>
-//         </div>
-
-//         {/* TOTAL */}
-//         <div className="px-6 py-4 border-t bg-gray-50 flex justify-between text-lg font-bold">
-//           <span>Total</span>
-//           <span className="text-orange-600">
-//             ₹{totalAmount}
-//           </span>
-//         </div>
-//       </div>
-
-//       {/* QR MODAL */}
-//       {showQR && (
-//         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-//           <div className="bg-white p-6 rounded max-w-sm w-full text-center">
-//             <h3 className="font-bold text-lg mb-3">
-//               Scan with UPI App
-//             </h3>
-
-//             {/* QR CODE YAHAN LAG SAKTA HAI */}
-//             {/* <QRCode value={upiLinkForQR} size={200} /> */}
-
-//             <p className="text-sm text-gray-600 mt-2">
-//               Google Pay / PhonePe se scan kare
-//             </p>
-
-//             <button
-//               onClick={() => setShowQR(false)}
-//               className="mt-4 w-full bg-gray-700 text-white py-2 rounded"
-//             >
-//               Close
-//             </button>
-//           </div>
-//         </div>
-//       )}
-//     </div>
-//   );
-// }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// import { useLocation, useNavigate } from 'react-router-dom';
-// import { useState } from 'react';
-// import { ChevronRight, Banknote } from 'lucide-react';
-
-// interface Product {
-//   image: string;
-//   title: string;
-//   price: number;
-// }
-
-// interface LocationState {
-//   product: Product;
-//   quantity: number;
-//   totalAmount: number;
-// }
-
-// export default function PaymentGateway() {
-//   const location = useLocation();
-//   const navigate = useNavigate();
-//   const { product, quantity, totalAmount } = location.state as LocationState;
-
-//   // 🔴 NORMAL UPI (NO MERCHANT)
-//   const UPI_ID = 'rishabhjhade@ybl';
-//   const PAYEE_NAME = 'Rishabh Jhade';
-
-//   const [showQR, setShowQR] = useState(false);
-//   const [upiLink, setUpiLink] = useState('');
-
-//   const handleUPIPayment = () => {
-//     const amount = totalAmount.toFixed(2);
-//     const note = `${product.title} (${quantity})`;
-
-//     const link = `upi://pay?pa=${encodeURIComponent(
-//       UPI_ID
-//     )}&pn=${encodeURIComponent(
-//       PAYEE_NAME
-//     )}&am=${amount}&cu=INR&tn=${encodeURIComponent(note)}`;
-
-//     console.log('UPI LINK:', link);
-//     setUpiLink(link);
-
-//     // 🔥 TRY DIRECT APP OPEN (BEST EFFORT)
-//     if (/Android|iPhone/i.test(navigator.userAgent)) {
-//       window.location.href = link;
-
-//       // 🔁 FAIL SAFE → QR
-//       setTimeout(() => {
-//         setShowQR(true);
-//       }, 2500);
-//     } else {
-//       setShowQR(true);
-//     }
-//   };
-
-//   const handleCOD = () => {
-//     alert('Order placed with Cash on Delivery');
-//     navigate('/');
-//   };
-
-//   return (
-//     <div className="min-h-screen bg-gray-50 p-6">
-//       <div className="max-w-3xl mx-auto bg-white rounded shadow">
-
-//         <div className="border-b px-6 py-4">
-//           <h1 className="text-2xl font-bold">Select Payment Method</h1>
-//         </div>
-
-//         <button
-//           onClick={handleUPIPayment}
-//           className="w-full flex items-center justify-between px-6 py-5 hover:bg-gray-100"
-//         >
-//           <div>
-//             <h3 className="text-lg font-semibold">UPI (GPay / PhonePe)</h3>
-//             <p className="text-sm text-gray-500">
-//               Pay ₹{totalAmount} to {UPI_ID}
-//             </p>
-//           </div>
-//           <ChevronRight />
-//         </button>
-
-//         <button
-//           onClick={handleCOD}
-//           className="w-full flex items-center justify-between px-6 py-5 hover:bg-gray-100"
-//         >
-//           <div>
-//             <h3 className="text-lg font-semibold">Cash on Delivery</h3>
-//             <p className="text-sm text-gray-500">Pay after delivery</p>
-//           </div>
-//           <Banknote />
-//         </button>
-
-//         <div className="p-6 border-t">
-//           <p className="font-semibold">{product.title}</p>
-//           <p>Qty: {quantity}</p>
-//           <p>Total: ₹{totalAmount}</p>
-//         </div>
-//       </div>
-
-//       {/* 🔳 QR FALLBACK */}
-//       {showQR && (
-//         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-//           <div className="bg-white p-6 rounded text-center">
-//             <h3 className="font-bold mb-3">Scan & Pay</h3>
-
-//             {/* Yaha apna STATIC QR IMAGE use karo */}
-//             <img
-//               src="/upi-qr.png"
-//               alt="UPI QR"
-//               className="w-52 mx-auto"
-//             />
-
-//             <p className="text-sm mt-2">
-//               ₹{totalAmount} for {product.title}
-//             </p>
-
-//             <button
-//               onClick={() => setShowQR(false)}
-//               className="mt-4 bg-gray-700 text-white px-4 py-2 rounded"
-//             >
-//               Close
-//             </button>
-//           </div>
-//         </div>
-//       )}
-//     </div>
-//   );
-// }
-
-
-
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { ChevronRight, Banknote } from 'lucide-react';
@@ -634,107 +297,171 @@ interface LocationState {
 export default function PaymentGateway() {
   const location = useLocation();
   const navigate = useNavigate();
-  const { product, quantity, totalAmount } = location.state as LocationState;
+  const { product, quantity, totalAmount } =
+    location.state as LocationState;
 
-  // 🔴 YAHAN APNA UPI ID CHANGE KAR (abhi SBI wala daal de)
-  const UPI_ID = 'rishabhjhade060-1@oksbi';   // ←← Yahan change kar lena
+  // ✅ NORMAL P2P UPI (PERSONAL)
+  const UPI_ID =
+    import.meta.env.VITE_UPI_ID || 'rishabhjhade060-@oksbi';
 
+  const [isLoading, setIsLoading] = useState(false);
   const [showQR, setShowQR] = useState(false);
-  const [upiLink, setUpiLink] = useState('');
+  const [upiLinkForQR, setUpiLinkForQR] = useState('');
 
   const handleUPIPayment = () => {
+    setIsLoading(true);
+
     const amount = totalAmount.toFixed(2);
-    const note = `${product.title} (${quantity})`;
 
-    // 🔥 pn parameter hata diya → error kam aayega
-    const link = `upi://pay?pa=${encodeURIComponent(
+    // ✅ PURE P2P UPI LINK (NO MERCHANT PARAMS)
+    const upiLink = `upi://pay?pa=${encodeURIComponent(
       UPI_ID
-    )}&am=${amount}&cu=INR&tn=${encodeURIComponent(note)}`;
+    )}&am=${amount}&cu=INR`;
 
-    console.log('UPI LINK:', link);
-    setUpiLink(link);
+    console.log('UPI LINK:', upiLink);
+    setUpiLinkForQR(upiLink);
 
-    // Mobile pe direct app open karne ki koshish
-    if (/Android|iPhone|iPad/i.test(navigator.userAgent)) {
-      window.location.href = link;
+    const isMobile = /Android|iPhone|iPad/i.test(
+      navigator.userAgent
+    );
 
-      // Agar app nahi khula toh 2.5 sec baad QR dikha de
-      setTimeout(() => {
-        setShowQR(true);
-      }, 2500);
+    if (isMobile) {
+      window.location.href = upiLink;
     } else {
-      // Desktop pe direct QR dikha de
       setShowQR(true);
     }
+
+    setIsLoading(false);
   };
 
   const handleCOD = () => {
-    alert('Order placed with Cash on Delivery');
+    alert('Order placed successfully with Cash on Delivery');
     navigate('/');
   };
 
+  const paymentMethods = [
+    {
+      id: 'gpay',
+      name: 'Khalti by IME',
+      subtitle: 'UPI Payment',
+      icon: 'https://khaltibyime.khalti.com/wp-content/uploads/2025/07/cropped-Logo-for-Blog-1024x522.png',
+      action: handleUPIPayment,
+    },
+    {
+      id: 'phonepe',
+      name: 'eSewa Mobile Wallet',
+      subtitle: 'UPI Payment',
+      icon: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAhFBMVEX///9gu0dfu0ZcukJWuDlZuT5buUBTtzVQtjGq2KBYuTz8/vtVuDju9+vr9ujy+fCCyHDj8t/3/Pbn9OS23qzN6MZ4xGWa0oxqv1O64LHU6851w2Dd8NmV0IbK58PS68xovlCJy3id05CX0Yil1pnB4rm/4rZ5xWVwwlp/x22NzH2k1pfP2XNkAAALXUlEQVR4nO2d2ZaqOhCG2wwEGVQUR3AeGvX93++AbneLBK1M0HudfBd90b1s+UlSqVQqla8vi8VisVgsFovFYrFYLBaLxWKxWCyW/xvhKE3X6/FqtRqP1+mo3/bz6MMPx/H0G7mMsYA8CBhz8fc0XoV+28+nRrg+DDouoQ5GnQoIO5SwzuAw7v2bMsPxNMEB5Wkr66SEZstVr+3nFaTXzRxC0Qd1f1UihzhZd9T2U4PpzxMXrO5HJXWzOGz72QH46wv1sJi6vyo977JuW8AH+t0ZcQRbr6QRk2z+i+1OegmogrxHQ9LrL50s062r0nxPGmlw/YUDcrSUHX1cjfgwbFtRGf9K1ftnWWNn3raoZ06a9d00ks2ibV0PognTru+mkV1+haeTd1B9A/AFiuK25eUWdKO/g/6AyLntmaNrpoP+gPG4TX39MzEssBiNh/YEph3HtL6C9npqbLqHPsC0nXlj2ZTAvKe6p+b1+VvSlL5CIml8MPYT2qDAQuKlWYHhphEb84w3aFagMTemHjpobrnRmzXegjeJ56ZW/6204F1iMwKHbQnMx+K2EYFJK130j8RpAwoHzU4TL5CucYH7Jid6Dq7p4EbM2hWYSzTroy5aF9hBHZORxn6nMWe7HvxtcFo8t2hGfzBoULvyVgYV+6EF3M1SQYwNxUhqQYiQ4zHXy7bTbs5hOti4DL61yP+XHUMe6kzcl0GY0M3ymJafqDc+ZNJbcAXUzFLq6ok+CCady7FmZ3cUTwJ5jcHKgMBUNC5K2fb4NoSUbpmsRrQx0E8nQk+DqDv9PG+liWw0ki61C4yF7CimAH0Fc0eyGd1Us8C+iB1FwQCcVzGSDPjgRLPCqcBz0I1IIF42aEf0BhgjD9yEKLi8eFXpabedJN/b7prvbl2kJGqeFC9gdw3R8vJmMaVB4cigW/LTldt7L1Id1dO5VEzBJg93ShYgPbPSu6HkymtHqVU1whob8QI1eM7s2YT6O1L5IE04zehLuEtaGzFygd9Jk+fXGs14TYMpx8734OP8B0S0LaO2wFFIJ88CxzUTDHI4ns5Kxtp4uvbAe8CFPS614LH2mfGE8yUy1gbNNDXiFfblKHgeg+8ahTeAQpl8KqLHAQeGLhB5Xpcu3g5dwhmKYm7hHawnCH6CfTV5HhS+xJNtJBqRRToUnkGWHJc2v/YfOjbjxCHGEnE8utMgMAJ9MaLPBjL9NHK5jSi2Prt/rY4J4wCyM6Tkq20/PivjLK7WgbBCLbYGZGdQ9vyR6PPIpbyVwbd4I2L13agU1ElZab20++whYN6edf0UWgtCys4pqJOWn9cHfAR1OI6NLxFjVO+mM8iXlqbCrzWkKXhT4tdO3LFxVAM2I0iE7cUNm0KGk8d79xIbPyhT7KagofHSU0C2iTcjfn1JLDECxUkfsjJETukjEaSrefwNpM/TTAWqtkocQoYhLWdkHT/ExjGlbFOTig+bfMv/Tm2+GEE66YtzuKxrhyJSw9zNtntK6zwRCYUIK7k1kGGIXiKX39VmL7Q5KLvEq+j942SNe98Q8/0yEMLSH7FDA2d23seLD9oKhlJBN08pdwHiDAflme3hsmHqBUG2vc7THsSeD0fj3UYqqohVZkQfMBu+bgNF7m24dbbdYzoEDZFwMV8mm+JEpozA/AEUFEJWTq+2zI/38Rg0NHy/N46nCXMDz0EKm8KugkJIBEwm4OWH0bG7TBxGqKO0331DxdTEgIHBdTDr6S1Ou0GCcm1YXdufJ1A4kbH8vAxCGJrAM1rnw63jEI3a7qgYU8CS9PM49/t5l7xk7N4lDaQcqSwvAM/zLqA37KWn6yWjty6pogFRPs4NVyGDCLBfURPtitbz/WSGA0+HKcGz7iuHw3WXM90vl8tY3m3rAyYLWjGli+52Q8itVISeLvnqFmpkBFBYiSL0mG5L4pjLY4NEochriQD9CZrO3pjCBWDCD17X6lL7ZO8V6s+deTAGPGzFoZAICX5AybX+NxSaO/IE6XAVhZDXIoZj7pSFlMKFxO7DezRE7pUUvjreoNCOEE67vbRiS0PtrqfBcQgZUpWlCygAKYTB2QIyH5Lj66cGug9+mfRpAEaj6pdKxDw/fIWOrWw+kDBNtQtpny4MKgwhgahK+k9fd6EMg7YUsj5EncqnEs0DEeE47Pf7YdjrjUZRTpoWP0e9Xlj8vt9X2F8LAOHSapwGEr8Sk0iZW9Rd5OHmKJzyhhj+aqxtBE1l1ARVqEYA2c7jRLpk9lcU8CoTFpwuoL9xPI5Y+HSNEpVFuAAnwKOirBII6ms4nyYAUygpCVonkGq5qk9pbXpR2bcYQmIunIMPAocX1FHae/IhNoPnGEtkHDzAjIm9HzXHHJSKgaoR2VR6wsDbaDTnpsDXobYHDDGm3NQY2UZEgS/68coaXAiQqeF5xj3JY3d/kgIieCgEUaVcjD5kwf6SMXTnIDUnPk4qCCjkZjkKAEqB5vUTuaU+vd4/PYe/HxWfrQC0nOWG3RcAt/0V5Pxx4wXiBPwEOTiQQEbNQbmr+Er4ke/fExiGqieCh6DIWTVYUyC8TsSPXGoBx1Y9XAyy29xzPl89wWMwyH1ElwWOXvBfrgiwrST+YFgIOSfo7yF7gQ26vyNXniHIO6kx2SeRvcSf8kHg4451vUcMmHtRk7XThUtkf/2GkUDT6zjvvALZtbrdE2gFV/QjUGjt5Wo4KevDhn1l/+IPMWhaRE/ucyQQjdSzpQE7IlCbV7MCFL+g6On9wM+N511by0UDKfB0Xp3ZjmYfGgW7l6e+Bjukc4cTQZECdjwP4bpCJv70XS0aTJJSBxc5hqjrIDAwu4LWexfRgNR0PRwk5YQckSo4COkqMAzc82Rv3It06VYbEnvu5cVALUQ2PfRt2QCP6CL6rkh8OE+KDL6ifkRRQsLxCEvmrw7JUOioLO8QoxzQM2X4wxmkcN3dTrJZTjKYzhecLjYRKZdGNeZKQc9ZvxmKP/g5NX/aiSy4UKDxXgFw5yFKrzUWSlShWje/59CXSxQG/0koKgBPv4YB3k4i0m927gotJ7WWp8lZg0O85LXEEBDBuqFoo7s+JMyxKaCZxDzsi5ZSYtpr0glUkMFU+ABEJHrkSVNFjBIClTnyxZ5YFxK+ZQF5Jq6hEynqQGcCAaJ0IrwFQIzcPxOJGHNEEuDSrb+vFpP6hI7oDA+xCRmzbPy5r0Z7JnEw1jN1S9JArMguCmaHt8MlPA2YTN1eZqzitXDqKKJ0cl1w3fFw0T0j8f5ZQA3eA7EWNgnFGWeyucxXi9FdaD8dH+Pdd754kj0LhWcmb4GQqpV8KygYsFv5YCf/SajKQS/k6a7rWWarkkeCdBzOY4Yv1RlK1f/TiLxnDyVstyw7aI2tSNpkNlBF4KCJi1hWYus4nThJM5fpHJu7rKsMNlHjmsvJ/I15XIGz5m6YnbfRinjW5J2dx+bHojNr9o7Atcm7OXnQhozMD2mn0amfbJu/rTvMGkwEZuaOzbzBHzRlUpHb1qW5B4nUNQnavE52hRsYjNwK4I3Ry0z3VMSWzduYEge5SAQUilq98PhG9G2uGVFwaXoW5BKrXPvzDroxcWGODL2zCT8Vu7tf0YB3jhvdXRWTs5Za3drw51o1oiBp38K8MoyxrvgGCmbHlqcIPn6MNbQjwmSjnNlsDH+eBDJ3HDzpc7zz7+ufJRYXT76zIo8uzUa0tRDGMyaxPkaIulncXCRGjXS38YT2JhD2vKz7u6aHT0TxGQUglQhT1tnG/5a8O/3F4ft9RcFcnMfooMtL4vtX8KPj4YzvW2oOvuVe5j+LO0kJYa73fTjW1oX+p/Cj9Wp+2F8GkyRLJufBZb/rHtfRL3I7LRaLxWKxWCwWi8VisVgsFovFYrFYzPMfbOC+9J0ExLwAAAAASUVORK5CYII=',
+      action: handleUPIPayment,
+    },
+    {
+      id: 'cod',
+      name: 'Cash on Delivery',
+      subtitle: 'Pay when product arrives',
+      icon: null,
+      action: handleCOD,
+    },
+  ];
+
   return (
     <div className="min-h-screen bg-gray-50 p-6">
-      <div className="max-w-3xl mx-auto bg-white rounded shadow">
+      <div className="max-w-3xl mx-auto bg-white rounded-lg shadow">
 
+        {/* HEADER */}
         <div className="border-b px-6 py-4">
-          <h1 className="text-2xl font-bold">Select Payment Method</h1>
+          <h1 className="text-2xl font-bold">
+            Select Payment Method
+          </h1>
         </div>
 
-        <button
-          onClick={handleUPIPayment}
-          className="w-full flex items-center justify-between px-6 py-5 hover:bg-gray-100 transition"
-        >
-          <div>
-            <h3 className="text-lg font-semibold">UPI (GPay / PhonePe)</h3>
-            <p className="text-sm text-gray-500">
-              Pay ₹{totalAmount} to {UPI_ID}
-            </p>
-          </div>
-          <ChevronRight className="text-gray-400" />
-        </button>
+        {/* PAYMENT METHODS */}
+        <div className="divide-y">
+          {paymentMethods.map((method) => (
+            <button
+              key={method.id}
+              onClick={method.action}
+              disabled={isLoading}
+              className="w-full flex items-center justify-between px-6 py-5 hover:bg-gray-100"
+            >
+              <div className="flex items-center gap-4">
+                <div className="w-14 h-14 bg-gray-100 rounded flex items-center justify-center">
+                  {method.icon ? (
+                    <img
+                      src={method.icon}
+                      alt={method.name}
+                      className="w-10"
+                    />
+                  ) : (
+                    <Banknote className="w-8 h-8" />
+                  )}
+                </div>
 
-        <button
-          onClick={handleCOD}
-          className="w-full flex items-center justify-between px-6 py-5 hover:bg-gray-100 transition"
-        >
-          <div>
-            <h3 className="text-lg font-semibold">Cash on Delivery</h3>
-            <p className="text-sm text-gray-500">Pay after delivery</p>
-          </div>
-          <Banknote className="text-gray-600" />
-        </button>
+                <div className="text-left">
+                  <h3 className="text-lg font-semibold">
+                    {method.name}
+                  </h3>
+                  <p className="text-sm text-gray-500">
+                    {method.subtitle}
+                  </p>
+                </div>
+              </div>
 
-        <div className="p-6 border-t bg-gray-50">
-          <p className="font-semibold">{product.title}</p>
-          <p>Quantity: {quantity}</p>
-          <p className="text-lg font-bold mt-2">Total: ₹{totalAmount}</p>
+              <ChevronRight />
+            </button>
+          ))}
+        </div>
+
+        {/* ORDER SUMMARY */}
+        <div className="p-6 border-t">
+          <h2 className="font-semibold mb-4">
+            Order Summary
+          </h2>
+
+          <div className="flex gap-4">
+            <img
+              src={product.image}
+              alt={product.title}
+              className="w-24 h-24 object-cover rounded"
+            />
+            <div>
+              <p className="font-medium">{product.title}</p>
+              <p className="text-sm text-gray-600">
+                Quantity: {quantity}
+              </p>
+              <p className="text-sm text-gray-600">
+                Price: ₹{product.price}
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* TOTAL */}
+        <div className="px-6 py-4 border-t bg-gray-50 flex justify-between text-lg font-bold">
+          <span>Total</span>
+          <span className="text-orange-600">
+            ₹{totalAmount}
+          </span>
         </div>
       </div>
 
-      {/* QR Code Fallback Modal */}
+      {/* QR MODAL */}
       {showQR && (
-        <div className="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50">
-          <div className="bg-white p-8 rounded-lg shadow-2xl text-center max-w-sm mx-4">
-            <h3 className="text-xl font-bold mb-4">Scan & Pay</h3>
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white p-6 rounded max-w-sm w-full text-center">
+            <h3 className="font-bold text-lg mb-3">
+              Scan with UPI App
+            </h3>
 
-            {/* Yahan apna static QR code image daal (jo tere UPI ID ka ho) */}
-            <img
-              src="/upi-qr.png"   // ←← Apna latest QR yahan daal dena
-              alt="UPI QR Code"
-              className="w-64 h-64 mx-auto border-4 border-gray-200 rounded"
-            />
+            {/* QR CODE YAHAN LAG SAKTA HAI */}
+            {/* <QRCode value={upiLinkForQR} size={200} /> */}
 
-            <p className="text-lg font-semibold mt-4">
-              ₹{totalAmount}
-            </p>
-            <p className="text-sm text-gray-600">
-              {product.title} × {quantity}
+            <p className="text-sm text-gray-600 mt-2">
+              Google Pay / PhonePe se scan kare
             </p>
 
             <button
               onClick={() => setShowQR(false)}
-              className="mt-6 bg-red-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-red-700 transition"
+              className="mt-4 w-full bg-gray-700 text-white py-2 rounded"
             >
               Close
             </button>
@@ -744,3 +471,15 @@ export default function PaymentGateway() {
     </div>
   );
 }
+
+
+
+
+
+
+
+
+
+
+
+
