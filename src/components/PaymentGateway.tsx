@@ -485,6 +485,136 @@
 
 
 
+// import { useLocation, useNavigate } from 'react-router-dom';
+// import { useState } from 'react';
+// import { ChevronRight, Banknote } from 'lucide-react';
+
+// interface Product {
+//   image: string;
+//   title: string;
+//   price: number;
+// }
+
+// interface LocationState {
+//   product: Product;
+//   quantity: number;
+//   totalAmount: number;
+// }
+
+// export default function PaymentGateway() {
+//   const location = useLocation();
+//   const navigate = useNavigate();
+//   const { product, quantity, totalAmount } = location.state as LocationState;
+
+//   // 🔴 NORMAL UPI (NO MERCHANT)
+//   const UPI_ID = 'rishabhjhade@ybl';
+//   const PAYEE_NAME = 'Rishabh Jhade';
+
+//   const [showQR, setShowQR] = useState(false);
+//   const [upiLink, setUpiLink] = useState('');
+
+//   const handleUPIPayment = () => {
+//     const amount = totalAmount.toFixed(2);
+//     const note = `${product.title} (${quantity})`;
+
+//     const link = `upi://pay?pa=${encodeURIComponent(
+//       UPI_ID
+//     )}&pn=${encodeURIComponent(
+//       PAYEE_NAME
+//     )}&am=${amount}&cu=INR&tn=${encodeURIComponent(note)}`;
+
+//     console.log('UPI LINK:', link);
+//     setUpiLink(link);
+
+//     // 🔥 TRY DIRECT APP OPEN (BEST EFFORT)
+//     if (/Android|iPhone/i.test(navigator.userAgent)) {
+//       window.location.href = link;
+
+//       // 🔁 FAIL SAFE → QR
+//       setTimeout(() => {
+//         setShowQR(true);
+//       }, 2500);
+//     } else {
+//       setShowQR(true);
+//     }
+//   };
+
+//   const handleCOD = () => {
+//     alert('Order placed with Cash on Delivery');
+//     navigate('/');
+//   };
+
+//   return (
+//     <div className="min-h-screen bg-gray-50 p-6">
+//       <div className="max-w-3xl mx-auto bg-white rounded shadow">
+
+//         <div className="border-b px-6 py-4">
+//           <h1 className="text-2xl font-bold">Select Payment Method</h1>
+//         </div>
+
+//         <button
+//           onClick={handleUPIPayment}
+//           className="w-full flex items-center justify-between px-6 py-5 hover:bg-gray-100"
+//         >
+//           <div>
+//             <h3 className="text-lg font-semibold">UPI (GPay / PhonePe)</h3>
+//             <p className="text-sm text-gray-500">
+//               Pay ₹{totalAmount} to {UPI_ID}
+//             </p>
+//           </div>
+//           <ChevronRight />
+//         </button>
+
+//         <button
+//           onClick={handleCOD}
+//           className="w-full flex items-center justify-between px-6 py-5 hover:bg-gray-100"
+//         >
+//           <div>
+//             <h3 className="text-lg font-semibold">Cash on Delivery</h3>
+//             <p className="text-sm text-gray-500">Pay after delivery</p>
+//           </div>
+//           <Banknote />
+//         </button>
+
+//         <div className="p-6 border-t">
+//           <p className="font-semibold">{product.title}</p>
+//           <p>Qty: {quantity}</p>
+//           <p>Total: ₹{totalAmount}</p>
+//         </div>
+//       </div>
+
+//       {/* 🔳 QR FALLBACK */}
+//       {showQR && (
+//         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+//           <div className="bg-white p-6 rounded text-center">
+//             <h3 className="font-bold mb-3">Scan & Pay</h3>
+
+//             {/* Yaha apna STATIC QR IMAGE use karo */}
+//             <img
+//               src="/upi-qr.png"
+//               alt="UPI QR"
+//               className="w-52 mx-auto"
+//             />
+
+//             <p className="text-sm mt-2">
+//               ₹{totalAmount} for {product.title}
+//             </p>
+
+//             <button
+//               onClick={() => setShowQR(false)}
+//               className="mt-4 bg-gray-700 text-white px-4 py-2 rounded"
+//             >
+//               Close
+//             </button>
+//           </div>
+//         </div>
+//       )}
+//     </div>
+//   );
+// }
+
+
+
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { ChevronRight, Banknote } from 'lucide-react';
@@ -506,9 +636,8 @@ export default function PaymentGateway() {
   const navigate = useNavigate();
   const { product, quantity, totalAmount } = location.state as LocationState;
 
-  // 🔴 NORMAL UPI (NO MERCHANT)
-  const UPI_ID = 'rishabhjhade@ybl';
-  const PAYEE_NAME = 'Rishabh Jhade';
+  // 🔴 YAHAN APNA UPI ID CHANGE KAR (abhi SBI wala daal de)
+  const UPI_ID = 'rishabhjhade060-1@oksbi';   // ←← Yahan change kar lena
 
   const [showQR, setShowQR] = useState(false);
   const [upiLink, setUpiLink] = useState('');
@@ -517,24 +646,24 @@ export default function PaymentGateway() {
     const amount = totalAmount.toFixed(2);
     const note = `${product.title} (${quantity})`;
 
+    // 🔥 pn parameter hata diya → error kam aayega
     const link = `upi://pay?pa=${encodeURIComponent(
       UPI_ID
-    )}&pn=${encodeURIComponent(
-      PAYEE_NAME
     )}&am=${amount}&cu=INR&tn=${encodeURIComponent(note)}`;
 
     console.log('UPI LINK:', link);
     setUpiLink(link);
 
-    // 🔥 TRY DIRECT APP OPEN (BEST EFFORT)
-    if (/Android|iPhone/i.test(navigator.userAgent)) {
+    // Mobile pe direct app open karne ki koshish
+    if (/Android|iPhone|iPad/i.test(navigator.userAgent)) {
       window.location.href = link;
 
-      // 🔁 FAIL SAFE → QR
+      // Agar app nahi khula toh 2.5 sec baad QR dikha de
       setTimeout(() => {
         setShowQR(true);
       }, 2500);
     } else {
+      // Desktop pe direct QR dikha de
       setShowQR(true);
     }
   };
@@ -554,7 +683,7 @@ export default function PaymentGateway() {
 
         <button
           onClick={handleUPIPayment}
-          className="w-full flex items-center justify-between px-6 py-5 hover:bg-gray-100"
+          className="w-full flex items-center justify-between px-6 py-5 hover:bg-gray-100 transition"
         >
           <div>
             <h3 className="text-lg font-semibold">UPI (GPay / PhonePe)</h3>
@@ -562,47 +691,50 @@ export default function PaymentGateway() {
               Pay ₹{totalAmount} to {UPI_ID}
             </p>
           </div>
-          <ChevronRight />
+          <ChevronRight className="text-gray-400" />
         </button>
 
         <button
           onClick={handleCOD}
-          className="w-full flex items-center justify-between px-6 py-5 hover:bg-gray-100"
+          className="w-full flex items-center justify-between px-6 py-5 hover:bg-gray-100 transition"
         >
           <div>
             <h3 className="text-lg font-semibold">Cash on Delivery</h3>
             <p className="text-sm text-gray-500">Pay after delivery</p>
           </div>
-          <Banknote />
+          <Banknote className="text-gray-600" />
         </button>
 
-        <div className="p-6 border-t">
+        <div className="p-6 border-t bg-gray-50">
           <p className="font-semibold">{product.title}</p>
-          <p>Qty: {quantity}</p>
-          <p>Total: ₹{totalAmount}</p>
+          <p>Quantity: {quantity}</p>
+          <p className="text-lg font-bold mt-2">Total: ₹{totalAmount}</p>
         </div>
       </div>
 
-      {/* 🔳 QR FALLBACK */}
+      {/* QR Code Fallback Modal */}
       {showQR && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-          <div className="bg-white p-6 rounded text-center">
-            <h3 className="font-bold mb-3">Scan & Pay</h3>
+        <div className="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50">
+          <div className="bg-white p-8 rounded-lg shadow-2xl text-center max-w-sm mx-4">
+            <h3 className="text-xl font-bold mb-4">Scan & Pay</h3>
 
-            {/* Yaha apna STATIC QR IMAGE use karo */}
+            {/* Yahan apna static QR code image daal (jo tere UPI ID ka ho) */}
             <img
-              src="/upi-qr.png"
-              alt="UPI QR"
-              className="w-52 mx-auto"
+              src="/upi-qr.png"   // ←← Apna latest QR yahan daal dena
+              alt="UPI QR Code"
+              className="w-64 h-64 mx-auto border-4 border-gray-200 rounded"
             />
 
-            <p className="text-sm mt-2">
-              ₹{totalAmount} for {product.title}
+            <p className="text-lg font-semibold mt-4">
+              ₹{totalAmount}
+            </p>
+            <p className="text-sm text-gray-600">
+              {product.title} × {quantity}
             </p>
 
             <button
               onClick={() => setShowQR(false)}
-              className="mt-4 bg-gray-700 text-white px-4 py-2 rounded"
+              className="mt-6 bg-red-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-red-700 transition"
             >
               Close
             </button>
