@@ -504,7 +504,7 @@ export default function PaymentGateway() {
   const navigate = useNavigate();
   const { product, quantity, totalAmount } = location.state as LocationState;
 
-  const UPI_ID = import.meta.env.VITE_UPI_ID || 'rishabhjhade060-1@oksbi';
+  const UPI_ID = import.meta.env.VITE_UPI_ID || '6263760047@ybl';
   const PAYEE_NAME = import.meta.env.VITE_PAYEE_NAME || 'Store Name';
 
   const [isLoading, setIsLoading] = useState(false);
