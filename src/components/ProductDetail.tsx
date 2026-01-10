@@ -1,4 +1,291 @@
-//this is my payment code 
+// //this is my payment code 
+
+// import { useLocation, useNavigate } from 'react-router-dom';
+// import { useState } from 'react';
+// import { Minus, Plus, Share2, Heart, MapPin, Truck, Wallet, Shield } from 'lucide-react';
+
+// interface Product {
+//   image: string;
+//   title: string;
+//   price: number;
+//   discount: number;
+//   rating: number;
+//   reviews: number;
+// }
+
+// export default function ProductDetail() {
+//   const location = useLocation();
+//   const navigate = useNavigate();
+//   const { product } = location.state as { product: Product };
+//   const [quantity, setQuantity] = useState(1);
+
+//   const originalPrice = Math.round(product.price / (1 - product.discount / 100));
+
+//   const handleBuyNow = () => {
+//     navigate('/address', {
+//       state: {
+//         product,
+//         quantity,
+//         totalAmount: product.price * quantity
+//       }
+//     });
+//   };
+
+//   const handleAddToCart = () => {
+//     alert('Product added to cart!');
+//   };
+
+//   return (
+//     <div className="min-h-screen bg-gray-50">
+//       <div className="bg-white border-b">
+//         <div className="max-w-7xl mx-auto px-6 py-4">
+//           <div className="flex items-center gap-2 text-sm text-gray-600">
+//             <span className="hover:text-[#F85606] cursor-pointer">Home</span>
+//             <span>/</span>
+//             <span className="hover:text-[#F85606] cursor-pointer">Health & Beauty</span>
+//             <span>/</span>
+//             <span className="hover:text-[#F85606] cursor-pointer">Bath & Body</span>
+//             <span>/</span>
+//             <span className="text-gray-900 truncate">{product.title.substring(0, 50)}...</span>
+//           </div>
+//         </div>
+//       </div>
+
+//       <div className="max-w-7xl mx-auto px-6 py-8">
+//         <div className="grid grid-cols-12 gap-6">
+//           <div className="col-span-5 bg-white rounded-lg p-6">
+//             <div className="relative mb-4">
+//               <img
+//                 src={product.image}
+//                 alt={product.title}
+//                 className="w-full h-[400px] object-contain"
+//               />
+//               <div className="absolute top-4 right-4 flex gap-2">
+//                 <button className="bg-white p-2 rounded-full shadow-lg hover:bg-gray-100">
+//                   <Share2 className="w-5 h-5 text-gray-600" />
+//                 </button>
+//                 <button className="bg-white p-2 rounded-full shadow-lg hover:bg-gray-100">
+//                   <Heart className="w-5 h-5 text-gray-600" />
+//                 </button>
+//               </div>
+//             </div>
+//             <div className="flex gap-2 overflow-x-auto">
+//               {[1, 2, 3, 4].map((_, idx) => (
+//                 <img
+//                   key={idx}
+//                   src={product.image}
+//                   alt={`Thumbnail ${idx + 1}`}
+//                   className="w-20 h-20 object-cover border-2 border-gray-200 rounded cursor-pointer hover:border-[#F85606]"
+//                 />
+//               ))}
+//             </div>
+//           </div>
+
+//           <div className="col-span-4 bg-white rounded-lg p-6">
+//             <div className="bg-gradient-to-r from-red-500 to-orange-500 text-white px-4 py-2 rounded-lg mb-4 inline-block text-sm font-semibold">
+//               12.12 PRICE LIVE NOW!
+//             </div>
+
+//             <h1 className="text-2xl font-semibold text-gray-900 mb-4 leading-tight">
+//               {product.title}
+//             </h1>
+
+//             <div className="flex items-center gap-3 mb-4">
+//               <div className="flex text-yellow-400">
+//                 {[...Array(5)].map((_, i) => (
+//                   <span key={i} className="text-lg">
+//                     {i < Math.floor(product.rating) ? '★' : '☆'}
+//                   </span>
+//                 ))}
+//               </div>
+//               <span className="text-sm text-blue-600 hover:underline cursor-pointer">
+//                 Ratings {product.reviews}
+//               </span>
+//             </div>
+
+//             <div className="border-t border-b border-gray-200 py-4 mb-4">
+//               <div className="flex items-baseline gap-3 mb-2">
+//                 <span className="text-4xl font-bold text-[#F85606]">
+//                   Rs. {product.price}
+//                 </span>
+//                 <span className="text-lg text-gray-500 line-through">
+//                   Rs. {originalPrice}
+//                 </span>
+//                 <span className="text-sm text-gray-600">
+//                   -{product.discount}%
+//                 </span>
+//               </div>
+//             </div>
+
+//             <div className="mb-6">
+//               <div className="flex items-center justify-between mb-2">
+//                 <span className="text-gray-700 font-medium">Scent</span>
+//                 <span className="text-gray-600">Not Specified</span>
+//               </div>
+//             </div>
+
+//             <div className="flex items-center gap-4 mb-6">
+//               <span className="text-gray-700 font-medium">Quantity</span>
+//               <div className="flex items-center border border-gray-300 rounded">
+//                 <button
+//                   onClick={() => setQuantity(Math.max(1, quantity - 1))}
+//                   className="p-2 hover:bg-gray-100"
+//                 >
+//                   <Minus className="w-4 h-4" />
+//                 </button>
+//                 <span className="px-6 py-2 border-x border-gray-300 min-w-[60px] text-center">
+//                   {quantity}
+//                 </span>
+//                 <button
+//                   onClick={() => setQuantity(quantity + 1)}
+//                   className="p-2 hover:bg-gray-100"
+//                 >
+//                   <Plus className="w-4 h-4" />
+//                 </button>
+//               </div>
+//             </div>
+
+//             <div className="flex gap-4 mb-6">
+//               <button
+//                 onClick={handleBuyNow}
+//                 className="flex-1 bg-[#2ABBE8] text-white py-4 rounded font-medium hover:bg-[#1a9bc9] transition-colors text-lg"
+//               >
+//                 Buy Now
+//               </button>
+//               <button
+//                 onClick={handleAddToCart}
+//                 className="flex-1 bg-[#F85606] text-white py-4 rounded font-medium hover:bg-[#d94805] transition-colors text-lg"
+//               >
+//                 Add to Cart
+//               </button>
+//             </div>
+//           </div>
+
+//           <div className="col-span-3">
+//             <div className="bg-white rounded-lg p-6 mb-4">
+//               <h3 className="font-semibold text-gray-900 mb-4 flex items-center gap-2">
+//                 <MapPin className="w-5 h-5 text-gray-600" />
+//                 Delivery Options
+//               </h3>
+//               <div className="space-y-4">
+//                 <div className="flex items-start gap-3">
+//                   <Truck className="w-5 h-5 text-gray-600 mt-1" />
+//                   <div>
+//                     <div className="font-medium text-gray-900">Standard Delivery</div>
+//                     <div className="text-sm text-gray-600">Get by 22-24 Dec</div>
+//                     <div className="text-sm font-medium text-gray-900 mt-1">Rs. 165</div>
+//                   </div>
+//                 </div>
+//                 <div className="flex items-start gap-3">
+//                   <MapPin className="w-5 h-5 text-gray-600 mt-1" />
+//                   <div>
+//                     <div className="font-medium text-gray-900">Standard Collection Point</div>
+//                     <div className="text-sm text-gray-600">Get by 22-24 Dec</div>
+//                     <div className="text-sm font-medium text-gray-900 mt-1">Rs. 50</div>
+//                   </div>
+//                 </div>
+//                 <div className="flex items-start gap-3">
+//                   <Wallet className="w-5 h-5 text-gray-600 mt-1" />
+//                   <div className="font-medium text-gray-900">Cash on Delivery Available</div>
+//                 </div>
+//               </div>
+//             </div>
+            
+//              {/* RETURN & WARRANTY */}
+//             <div className="bg-white rounded-lg p-6">
+//               <h3 className="font-semibold mb-4 flex gap-2">
+//                 <Shield /> Return & Warranty
+//               </h3>
+//               <div className="space-y-2 text-sm">
+//                 <div className="flex gap-2">✓ 14 days easy return</div>
+//                 <div className="flex gap-2">✕ Warranty not available</div>
+//               </div>
+//             </div>
+
+
+//              {/* QR + APP */}
+//             <div className="bg-white rounded-lg p-4">
+//               <div className="flex gap-4 items-center">
+//                 <div className="border p-2 rounded">
+//                   <img
+//                     src="./dist/assets/daraz scanner.avif"
+//                     className="w-24 h-24"
+//                   />
+//                   <p className="text-xs text-center mt-1">Scan with mobile</p>
+//                 </div>
+
+//                 <div className="flex-1 bg-white border rounded-lg px-4 py-3 flex items-center gap-3 shadow-sm">
+//                   {/* ORANGE LOGO BOX */}
+//                   <div className="w-10 h-10 rounded-lg bg-[#F85606] flex items-center justify-center">
+//                     <img
+//                       src="https://img.drz.lazcdn.com/g/tps/imgextra/i1/O1CN01XrNYQP1paGCVispyM_!!6000000005376-2-tps-82-82.png"
+//                       alt="App Logo"
+//                       className="w-5 h-5"
+//                     />
+//                   </div>
+
+
+
+//                   {/* TEXT */}
+//                   <p className="text-sm text-gray-600 leading-snug">
+//                     Download app to enjoy
+//                     <br />
+//                     <span className="font-medium text-gray-700">
+//                       exclusive discounts!
+//                     </span>
+//                   </p>
+//                 </div>
+
+
+
+//                 </div>
+//             </div>
+
+//             {/* SOLD BY */}
+//             <div className="bg-white rounded-lg p-4">
+//               <div className="flex justify-between mb-3">
+//                 <div>
+//                   <p className="text-xs text-gray-500">Sold by</p>
+//                   <p className="font-semibold">ATTASHI MART</p>
+//                 </div>
+//                 <button className="text-blue-600 text-sm">💬 Chat Now</button>
+//               </div>
+
+
+
+
+//             <div className="grid grid-cols-3 text-center border-t pt-3 text-sm">
+//                 <div>
+//                   <p className="text-xs text-gray-500">Positive Ratings</p>
+//                   <b>89%</b>
+//                 </div>
+//                 <div>
+//                   <p className="text-xs text-gray-500">Ship on Time</p>
+//                   <b>86%</b>
+//                 </div>
+//                 <div>
+//                   <p className="text-xs text-gray-500">Chat Response</p>
+//                   <span className="text-xs text-gray-400">
+//                     Not enough data
+//                   </span>
+//                 </div>
+//               </div>
+//                 <button className="w-full mt-4 border border-blue-500 text-blue-600 py-2 rounded">
+//                 GO TO STORE
+//               </button>
+//             </div>
+            
+//           </div>
+//         </div>
+//       </div>
+//     </div>
+//   );
+// }
+
+
+
+
+
 
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
@@ -23,11 +310,7 @@ export default function ProductDetail() {
 
   const handleBuyNow = () => {
     navigate('/address', {
-      state: {
-        product,
-        quantity,
-        totalAmount: product.price * quantity
-      }
+      state: { product, quantity, totalAmount: product.price * quantity },
     });
   };
 
@@ -36,89 +319,95 @@ export default function ProductDetail() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="bg-white border-b">
-        <div className="max-w-7xl mx-auto px-6 py-4">
-          <div className="flex items-center gap-2 text-sm text-gray-600">
-            <span className="hover:text-[#F85606] cursor-pointer">Home</span>
+    <div className="min-h-screen bg-gray-50 pb-8">
+      {/* Breadcrumb - mobile pe scrollable */}
+      <div className="bg-white border-b sticky top-0 z-10">
+        <div className="max-w-7xl mx-auto px-4 py-2.5">
+          <div className="flex items-center gap-1.5 text-xs text-gray-600 overflow-x-auto whitespace-nowrap">
+            <span className="hover:text-orange-600 cursor-pointer">Home</span>
             <span>/</span>
-            <span className="hover:text-[#F85606] cursor-pointer">Health & Beauty</span>
+            <span className="hover:text-orange-600 cursor-pointer">Health & Beauty</span>
             <span>/</span>
-            <span className="hover:text-[#F85606] cursor-pointer">Bath & Body</span>
+            <span className="hover:text-orange-600 cursor-pointer">Bath & Body</span>
             <span>/</span>
-            <span className="text-gray-900 truncate">{product.title.substring(0, 50)}...</span>
+            <span className="text-gray-900 font-medium">
+              {product.title.substring(0, 40)}...
+            </span>
           </div>
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-6 py-8">
-        <div className="grid grid-cols-12 gap-6">
-          <div className="col-span-5 bg-white rounded-lg p-6">
-            <div className="relative mb-4">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6">
+        {/* Main Product Section */}
+        <div className="flex flex-col lg:flex-row lg:gap-6 py-5">
+          {/* Left - Image + thumbnails */}
+          <div className="w-full lg:w-5/12 bg-white rounded-lg p-4 mb-4 lg:mb-0">
+            <div className="relative">
               <img
                 src={product.image}
                 alt={product.title}
-                className="w-full h-[400px] object-contain"
+                className="w-full h-[380px] sm:h-[460px] lg:h-[520px] object-contain mx-auto"
               />
-              <div className="absolute top-4 right-4 flex gap-2">
-                <button className="bg-white p-2 rounded-full shadow-lg hover:bg-gray-100">
-                  <Share2 className="w-5 h-5 text-gray-600" />
+              <div className="absolute top-3 right-3 flex gap-2">
+                <button className="bg-white p-2.5 rounded-full shadow-md hover:bg-gray-50">
+                  <Share2 className="w-5 h-5 text-gray-700" />
                 </button>
-                <button className="bg-white p-2 rounded-full shadow-lg hover:bg-gray-100">
-                  <Heart className="w-5 h-5 text-gray-600" />
+                <button className="bg-white p-2.5 rounded-full shadow-md hover:bg-gray-50">
+                  <Heart className="w-5 h-5 text-gray-700" />
                 </button>
               </div>
             </div>
-            <div className="flex gap-2 overflow-x-auto">
+
+            {/* Thumbnails */}
+            <div className="mt-4 flex gap-2 overflow-x-auto pb-2 snap-x snap-mandatory">
               {[1, 2, 3, 4].map((_, idx) => (
                 <img
                   key={idx}
                   src={product.image}
-                  alt={`Thumbnail ${idx + 1}`}
-                  className="w-20 h-20 object-cover border-2 border-gray-200 rounded cursor-pointer hover:border-[#F85606]"
+                  alt={`thumb ${idx + 1}`}
+                  className="w-20 h-20 sm:w-24 sm:h-24 object-cover rounded border-2 border-gray-200 hover:border-orange-500 snap-start flex-shrink-0 transition-colors"
                 />
               ))}
             </div>
           </div>
 
-          <div className="col-span-4 bg-white rounded-lg p-6">
-            <div className="bg-gradient-to-r from-red-500 to-orange-500 text-white px-4 py-2 rounded-lg mb-4 inline-block text-sm font-semibold">
+          {/* Middle - Product Info + Buttons */}
+          <div className="w-full lg:w-4/12 bg-white rounded-lg p-5 lg:p-6">
+            <div className="bg-gradient-to-r from-red-500 to-orange-600 text-white px-3 py-1.5 rounded text-sm font-bold inline-block mb-4">
               12.12 PRICE LIVE NOW!
             </div>
 
-            <h1 className="text-2xl font-semibold text-gray-900 mb-4 leading-tight">
+            <h1 className="text-xl sm:text-2xl font-semibold leading-tight mb-3">
               {product.title}
             </h1>
 
             <div className="flex items-center gap-3 mb-4">
-              <div className="flex text-yellow-400">
+              <div className="flex text-yellow-400 text-xl">
                 {[...Array(5)].map((_, i) => (
-                  <span key={i} className="text-lg">
-                    {i < Math.floor(product.rating) ? '★' : '☆'}
-                  </span>
+                  <span key={i}>{i < Math.floor(product.rating) ? '★' : '☆'}</span>
                 ))}
               </div>
-              <span className="text-sm text-blue-600 hover:underline cursor-pointer">
-                Ratings {product.reviews}
+              <span className="text-blue-600 text-sm hover:underline">
+                {product.reviews} Ratings
               </span>
             </div>
 
-            <div className="border-t border-b border-gray-200 py-4 mb-4">
-              <div className="flex items-baseline gap-3 mb-2">
-                <span className="text-4xl font-bold text-[#F85606]">
-                  Rs. {product.price}
+            <div className="border-y py-4 mb-5">
+              <div className="flex flex-wrap items-baseline gap-3">
+                <span className="text-3xl sm:text-4xl font-bold text-orange-600">
+                  Rs. {product.price.toLocaleString()}
                 </span>
                 <span className="text-lg text-gray-500 line-through">
-                  Rs. {originalPrice}
+                  Rs. {originalPrice.toLocaleString()}
                 </span>
-                <span className="text-sm text-gray-600">
+                <span className="text-base font-medium text-green-600">
                   -{product.discount}%
                 </span>
               </div>
             </div>
 
-            <div className="mb-6">
-              <div className="flex items-center justify-between mb-2">
+            <div className="space-y-4 mb-6">
+              <div className="flex justify-between text-sm">
                 <span className="text-gray-700 font-medium">Scent</span>
                 <span className="text-gray-600">Not Specified</span>
               </div>
@@ -126,162 +415,151 @@ export default function ProductDetail() {
 
             <div className="flex items-center gap-4 mb-6">
               <span className="text-gray-700 font-medium">Quantity</span>
-              <div className="flex items-center border border-gray-300 rounded">
+              <div className="flex border border-gray-300 rounded">
                 <button
                   onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                  className="p-2 hover:bg-gray-100"
+                  className="px-4 py-2 hover:bg-gray-100 active:bg-gray-200"
                 >
-                  <Minus className="w-4 h-4" />
+                  <Minus size={18} />
                 </button>
-                <span className="px-6 py-2 border-x border-gray-300 min-w-[60px] text-center">
+                <span className="px-6 py-2 min-w-[60px] text-center font-medium border-x">
                   {quantity}
                 </span>
                 <button
                   onClick={() => setQuantity(quantity + 1)}
-                  className="p-2 hover:bg-gray-100"
+                  className="px-4 py-2 hover:bg-gray-100 active:bg-gray-200"
                 >
-                  <Plus className="w-4 h-4" />
+                  <Plus size={18} />
                 </button>
               </div>
             </div>
 
-            <div className="flex gap-4 mb-6">
+            {/* Action Buttons - stack on mobile */}
+            <div className="flex flex-col sm:flex-row gap-3">
               <button
                 onClick={handleBuyNow}
-                className="flex-1 bg-[#2ABBE8] text-white py-4 rounded font-medium hover:bg-[#1a9bc9] transition-colors text-lg"
+                className="flex-1 bg-[#2ABBE8] hover:bg-[#1a9bc9] text-white py-4 rounded-lg font-medium transition-colors text-lg active:scale-[0.98]"
               >
                 Buy Now
               </button>
               <button
                 onClick={handleAddToCart}
-                className="flex-1 bg-[#F85606] text-white py-4 rounded font-medium hover:bg-[#d94805] transition-colors text-lg"
+                className="flex-1 bg-[#F85606] hover:bg-[#d94805] text-white py-4 rounded-lg font-medium transition-colors text-lg active:scale-[0.98]"
               >
                 Add to Cart
               </button>
             </div>
           </div>
 
-          <div className="col-span-3">
-            <div className="bg-white rounded-lg p-6 mb-4">
-              <h3 className="font-semibold text-gray-900 mb-4 flex items-center gap-2">
-                <MapPin className="w-5 h-5 text-gray-600" />
+          {/* Right Sidebar - Delivery + Seller + App */}
+          <div className="w-full lg:w-3/12 space-y-5 mt-5 lg:mt-0">
+            {/* Delivery Options */}
+            <div className="bg-white rounded-lg p-5">
+              <h3 className="font-semibold mb-4 flex items-center gap-2">
+                <MapPin size={20} className="text-gray-600" />
                 Delivery Options
               </h3>
-              <div className="space-y-4">
-                <div className="flex items-start gap-3">
-                  <Truck className="w-5 h-5 text-gray-600 mt-1" />
+              <div className="space-y-4 text-sm">
+                <div className="flex gap-3">
+                  <Truck size={20} className="text-gray-600 mt-1" />
                   <div>
-                    <div className="font-medium text-gray-900">Standard Delivery</div>
-                    <div className="text-sm text-gray-600">Get by 22-24 Dec</div>
-                    <div className="text-sm font-medium text-gray-900 mt-1">Rs. 165</div>
+                    <div className="font-medium">Standard Delivery</div>
+                    <div className="text-gray-600">Get by 22-24 Dec</div>
+                    <div className="font-medium mt-1">Rs. 165</div>
                   </div>
                 </div>
-                <div className="flex items-start gap-3">
-                  <MapPin className="w-5 h-5 text-gray-600 mt-1" />
+
+                <div className="flex gap-3">
+                  <MapPin size={20} className="text-gray-600 mt-1" />
                   <div>
-                    <div className="font-medium text-gray-900">Standard Collection Point</div>
-                    <div className="text-sm text-gray-600">Get by 22-24 Dec</div>
-                    <div className="text-sm font-medium text-gray-900 mt-1">Rs. 50</div>
+                    <div className="font-medium">Collection Point</div>
+                    <div className="text-gray-600">Get by 22-24 Dec</div>
+                    <div className="font-medium mt-1">Rs. 50</div>
                   </div>
                 </div>
-                <div className="flex items-start gap-3">
-                  <Wallet className="w-5 h-5 text-gray-600 mt-1" />
-                  <div className="font-medium text-gray-900">Cash on Delivery Available</div>
+
+                <div className="flex gap-3">
+                  <Wallet size={20} className="text-gray-600 mt-1" />
+                  <div className="font-medium">Cash on Delivery Available</div>
                 </div>
               </div>
             </div>
-            
-             {/* RETURN & WARRANTY */}
-            <div className="bg-white rounded-lg p-6">
-              <h3 className="font-semibold mb-4 flex gap-2">
-                <Shield /> Return & Warranty
+
+            {/* Return & Warranty */}
+            <div className="bg-white rounded-lg p-5">
+              <h3 className="font-semibold mb-4 flex items-center gap-2">
+                <Shield size={20} />
+                Return & Warranty
               </h3>
               <div className="space-y-2 text-sm">
-                <div className="flex gap-2">✓ 14 days easy return</div>
-                <div className="flex gap-2">✕ Warranty not available</div>
+                <div>✓ 14 days easy return</div>
+                <div>✕ Warranty not available</div>
               </div>
             </div>
 
-
-             {/* QR + APP */}
-            <div className="bg-white rounded-lg p-4">
-              <div className="flex gap-4 items-center">
-                <div className="border p-2 rounded">
+            {/* QR Code + App Promotion */}
+            <div className="bg-white rounded-lg p-5">
+              <div className="flex items-center gap-4">
+                <div className="border rounded p-2">
                   <img
-                    src="./dist/assets/daraz scanner.avif"
+                    src="https://img.drz.lazcdn.com/g/tps/imgextra/i2/O1CN01jHjmpl1pxcRVgFrYS_!!6000000005427-0-tps-150-150.jpg_360x360q80.jpg"
+                    alt="QR Code"
                     className="w-24 h-24"
                   />
-                  <p className="text-xs text-center mt-1">Scan with mobile</p>
+                  <p className="text-xs text-center mt-1 text-gray-600">Scan with mobile</p>
                 </div>
 
-                <div className="flex-1 bg-white border rounded-lg px-4 py-3 flex items-center gap-3 shadow-sm">
-                  {/* ORANGE LOGO BOX */}
-                  <div className="w-10 h-10 rounded-lg bg-[#F85606] flex items-center justify-center">
+                <div className="flex-1 flex items-center gap-3">
+                  <div className="w-12 h-12 bg-[#F85606] rounded-lg flex items-center justify-center flex-shrink-0">
                     <img
                       src="https://img.drz.lazcdn.com/g/tps/imgextra/i1/O1CN01XrNYQP1paGCVispyM_!!6000000005376-2-tps-82-82.png"
-                      alt="App Logo"
-                      className="w-5 h-5"
+                      alt="Daraz App"
+                      className="w-7 h-7"
                     />
                   </div>
-
-
-
-                  {/* TEXT */}
-                  <p className="text-sm text-gray-600 leading-snug">
+                  <p className="text-sm text-gray-600">
                     Download app to enjoy
                     <br />
-                    <span className="font-medium text-gray-700">
-                      exclusive discounts!
-                    </span>
+                    <span className="font-medium text-gray-800">exclusive discounts!</span>
                   </p>
                 </div>
-
-
-
-                </div>
+              </div>
             </div>
 
-            {/* SOLD BY */}
-            <div className="bg-white rounded-lg p-4">
-              <div className="flex justify-between mb-3">
+            {/* Seller Info */}
+            <div className="bg-white rounded-lg p-5">
+              <div className="flex justify-between items-center mb-4">
                 <div>
                   <p className="text-xs text-gray-500">Sold by</p>
                   <p className="font-semibold">ATTASHI MART</p>
                 </div>
-                <button className="text-blue-600 text-sm">💬 Chat Now</button>
+                <button className="text-blue-600 text-sm font-medium hover:underline">
+                  💬 Chat Now
+                </button>
               </div>
 
-
-
-
-            <div className="grid grid-cols-3 text-center border-t pt-3 text-sm">
+              <div className="grid grid-cols-3 text-center border-t pt-4 text-xs sm:text-sm">
                 <div>
-                  <p className="text-xs text-gray-500">Positive Ratings</p>
-                  <b>89%</b>
+                  <p className="text-gray-500">Positive Ratings</p>
+                  <p className="font-bold text-green-600">89%</p>
                 </div>
                 <div>
-                  <p className="text-xs text-gray-500">Ship on Time</p>
-                  <b>86%</b>
+                  <p className="text-gray-500">Ship on Time</p>
+                  <p className="font-bold text-green-600">86%</p>
                 </div>
                 <div>
-                  <p className="text-xs text-gray-500">Chat Response</p>
-                  <span className="text-xs text-gray-400">
-                    Not enough data
-                  </span>
+                  <p className="text-gray-500">Chat Response</p>
+                  <p className="text-gray-400">Not enough data</p>
                 </div>
               </div>
-                <button className="w-full mt-4 border border-blue-500 text-blue-600 py-2 rounded">
+
+              <button className="w-full mt-5 border border-blue-600 text-blue-600 py-2.5 rounded-lg font-medium hover:bg-blue-50 transition">
                 GO TO STORE
               </button>
             </div>
-            
           </div>
         </div>
       </div>
     </div>
   );
 }
-
-
-
-

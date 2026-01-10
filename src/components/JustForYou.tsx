@@ -1,4 +1,9 @@
+
+// import { useNavigate } from 'react-router-dom'; // Agar aap React Router use kar rahe hain (recommended)
+
 // export default function JustForYou() {
+//   const navigate = useNavigate(); // Hook for navigation
+
 //   const products = [
 //     {
 //       image: 'https://img.drz.lazcdn.com/static/pk/p/b3af1348df2133ea3236b7c61b485b3f.jpg_400x400q80.jpg',
@@ -192,6 +197,11 @@
 //     }
 //   ];
 
+//   const handleProductClick = (product: { image: string; title: string; price: number; discount: number; rating: number; reviews: number; }) => {
+//     // New product detail page par navigate karo, product data pass karte hue
+//     navigate('/product-detail', { state: { product } });
+//   };
+
 //   return (
 //     <div className="max-w-7xl mx-auto px-4 py-8 bg-gray-50">
 //       <div className="bg-white rounded-lg shadow-sm p-6">
@@ -199,7 +209,11 @@
 
 //         <div className="grid grid-cols-6 gap-4">
 //           {products.map((product, index) => (
-//             <div key={index} className="bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg transition-shadow cursor-pointer group">
+//             <div
+//               key={index}
+//               className="bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg transition-shadow cursor-pointer group"
+//               onClick={() => handleProductClick(product)} // Yahan click handler add kiya
+//             >
 //               <div className="relative">
 //                 <img
 //                   src={product.image}
@@ -213,6 +227,9 @@
 //                 </h3>
 //                 <div className="flex items-baseline gap-2 mb-2">
 //                   <span className="text-[#F85606] font-bold text-lg">Rs.{product.price}</span>
+//                   {/* {product.originalPrice && (
+//                     <span className="text-sm text-gray-500 line-through">Rs.{product.originalPrice}</span>
+//                   )} */}
 //                   <span className="text-xs text-gray-500">-{product.discount}%</span>
 //                 </div>
 //                 <div className="flex items-center gap-1">
@@ -239,26 +256,10 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-import { useNavigate } from 'react-router-dom'; // Agar aap React Router use kar rahe hain (recommended)
+import { useNavigate } from "react-router-dom";
 
 export default function JustForYou() {
-  const navigate = useNavigate(); // Hook for navigation
+  const navigate = useNavigate();
 
   const products = [
     {
@@ -453,55 +454,66 @@ export default function JustForYou() {
     }
   ];
 
-  const handleProductClick = (product: { image: string; title: string; price: number; discount: number; rating: number; reviews: number; }) => {
-    // New product detail page par navigate karo, product data pass karte hue
-    navigate('/product-detail', { state: { product } });
+  const handleProductClick = (product: any) => {
+    navigate("/product-detail", { state: { product } });
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-4 py-8 bg-gray-50">
-      <div className="bg-white rounded-lg shadow-sm p-6">
-        <h2 className="text-3xl font-bold text-gray-800 mb-6">Just For You</h2>
+    <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 py-6 bg-gray-50">
+      <div className="bg-white rounded-lg shadow-sm p-3 sm:p-4 md:p-6">
+        <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-800 mb-4 md:mb-6">
+          Just For You
+        </h2>
 
-        <div className="grid grid-cols-6 gap-4">
+        {/* 🔥 Responsive Product Grid */}
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3 sm:gap-4">
           {products.map((product, index) => (
             <div
               key={index}
-              className="bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg transition-shadow cursor-pointer group"
-              onClick={() => handleProductClick(product)} // Yahan click handler add kiya
+              onClick={() => handleProductClick(product)}
+              className="bg-white border border-gray-200 rounded-lg overflow-hidden cursor-pointer hover:shadow-lg transition-all group"
             >
-              <div className="relative">
+              {/* Image */}
+              <div className="relative overflow-hidden">
                 <img
                   src={product.image}
                   alt={product.title}
-                  className="w-full h-48 object-cover group-hover:scale-105 transition-transform"
+                  className="w-full h-32 sm:h-40 md:h-44 lg:h-48 object-cover group-hover:scale-105 transition-transform"
                 />
               </div>
-              <div className="p-3">
-                <h3 className="text-sm text-gray-700 mb-2 h-12 overflow-hidden">
+
+              {/* Info */}
+              <div className="p-2 sm:p-3">
+                <h3 className="text-xs sm:text-sm text-gray-700 mb-2 line-clamp-2 min-h-[36px]">
                   {product.title}
                 </h3>
-                <div className="flex items-baseline gap-2 mb-2">
-                  <span className="text-[#F85606] font-bold text-lg">Rs.{product.price}</span>
-                  {/* {product.originalPrice && (
-                    <span className="text-sm text-gray-500 line-through">Rs.{product.originalPrice}</span>
-                  )} */}
-                  <span className="text-xs text-gray-500">-{product.discount}%</span>
+
+                <div className="flex items-center gap-2 mb-1">
+                  <span className="text-[#F85606] font-bold text-sm sm:text-base">
+                    Rs.{product.price}
+                  </span>
+                  <span className="text-[10px] sm:text-xs text-gray-500">
+                    -{product.discount}%
+                  </span>
                 </div>
+
                 <div className="flex items-center gap-1">
-                  <div className="flex text-yellow-400">
+                  <div className="flex text-yellow-400 text-[10px] sm:text-xs">
                     {[...Array(5)].map((_, i) => (
-                      <span key={i} className="text-xs">
-                        {i < Math.floor(product.rating) ? '★' : '☆'}
+                      <span key={i}>
+                        {i < Math.floor(product.rating) ? "★" : "☆"}
                       </span>
                     ))}
                   </div>
-                  <span className="text-xs text-gray-500">({product.reviews})</span>
+                  <span className="text-[10px] sm:text-xs text-gray-500">
+                    ({product.reviews})
+                  </span>
                 </div>
               </div>
             </div>
           ))}
         </div>
+
       </div>
     </div>
   );
