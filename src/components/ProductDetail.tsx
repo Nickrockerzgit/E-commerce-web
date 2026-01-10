@@ -210,33 +210,7 @@ export default function ProductDetail() {
             </div>
 
             {/* QR Code + App Promotion */}
-            <div className="bg-white rounded-lg p-5">
-              <div className="flex items-center gap-4">
-                <div className="border rounded p-2">
-                  <img
-                    src="https://img.drz.lazcdn.com/g/tps/imgextra/i2/O1CN01jHjmpl1pxcRVgFrYS_!!6000000005427-0-tps-150-150.jpg_360x360q80.jpg"
-                    alt="QR Code"
-                    className="w-24 h-24"
-                  />
-                  <p className="text-xs text-center mt-1 text-gray-600">Scan with mobile</p>
-                </div>
-
-                <div className="flex-1 flex items-center gap-3">
-                  <div className="w-12 h-12 bg-[#F85606] rounded-lg flex items-center justify-center flex-shrink-0">
-                    <img
-                      src="https://img.drz.lazcdn.com/g/tps/imgextra/i1/O1CN01XrNYQP1paGCVispyM_!!6000000005376-2-tps-82-82.png"
-                      alt="Daraz App"
-                      className="w-7 h-7"
-                    />
-                  </div>
-                  <p className="text-sm text-gray-600">
-                    Download app to enjoy
-                    <br />
-                    <span className="font-medium text-gray-800">exclusive discounts!</span>
-                  </p>
-                </div>
-              </div>
-            </div>
+           
 
             {/* Seller Info */}
             <div className="bg-white rounded-lg p-5">
