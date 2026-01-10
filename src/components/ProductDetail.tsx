@@ -198,12 +198,24 @@ export default function ProductDetail() {
             </div>
 
             {/* Return & Warranty */}
-           
+            <div className="bg-white rounded-lg p-5">
+              <h3 className="font-semibold mb-4 flex items-center gap-2">
+                <Shield size={20} />
+                Return & Warranty
+              </h3>
+              <div className="space-y-2 text-sm">
+                <div>✓ 14 days easy return</div>
+                <div>✕ Warranty not available</div>
+              </div>
+            </div>
+
             {/* QR Code + App Promotion */}
            
 
             {/* Seller Info */}
-           
+            <div className="bg-white rounded-lg p-5">
+              
+
               <div className="grid grid-cols-3 text-center border-t pt-4 text-xs sm:text-sm">
                 <div>
                   <p className="text-gray-500">Positive Ratings</p>
@@ -219,10 +231,11 @@ export default function ProductDetail() {
                 </div>
               </div>
 
+              
             </div>
           </div>
         </div>
       </div>
-    
+    </div>
   );
 }
