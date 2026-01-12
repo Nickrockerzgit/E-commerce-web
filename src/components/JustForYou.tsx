@@ -279,12 +279,12 @@ export default function JustForYou() {
       reviews: 2126
     },
     {
-      image: 'https://img.drz.lazcdn.com/static/pk/p/da6df1b0f8ff6b170bc6d15ef2dbce08.png_360x360q80.avif',
-      title: 'Apple iPhone 17 Pro Max _ 6.9" Inch Display _ 1 Year Official Warranty Mercantile _ ESim _ 256GB _ PTA Approved,...',
-      price: 15549,
+      image: 'https://img.drz.lazcdn.com/g/kf/S617bc4d0a76c48759db935a14617f2bfV.jpg_400x400q80.jpg',
+      title: 'Imported Electric Kettle 2Liter stainless steel with automatic switch and rapid boiling...',
+      price: 999,
       discount: 50,
       rating: 4.6,
-      reviews: 1860
+      reviews: 2000
     },
     {
       image: 'https://img.drz.lazcdn.com/static/pk/p/4e1bb2c2b1668c1eab0c64ec65b2bcca.jpg_360x360q80.avif',

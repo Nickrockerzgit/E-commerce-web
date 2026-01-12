@@ -738,7 +738,7 @@ export default function PaymentPage() {
           </div>
         </div>
 
-        {/* Footer small text */}
+     
         
       </div>
     </div>

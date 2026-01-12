@@ -129,14 +129,15 @@ export default function FlashSale() {
   const navigate = useNavigate();
 
   const products = [
-    {
-      image: 'https://img.drz.lazcdn.com/g/kf/S617bc4d0a76c48759db935a14617f2bfV.jpg_400x400q80.jpg',
-      title: 'Imported Electric Kettle 2Liter stainless steel with automatic switch and rapid boiling...',
-      price: 999,
-      originalPrice: 2000,
+     {
+      image: 'https://img.drz.lazcdn.com/static/pk/p/da6df1b0f8ff6b170bc6d15ef2dbce08.png_360x360q80.avif',
+      title: 'Apple iPhone 17 Pro Max _ 6.9" Inch Display _ 1 Year Official Warranty Mercantile _ ESim _ 256GB _ PTA Approved,...',
+      price: 15549,
+      originalPrice: 20000,
       discount: 44,
-      badge: 'PACK OF 6'
+     
     },
+       
     {
       image: 'https://img.drz.lazcdn.com/static/pk/p/7a33150c9dc7a00c27eaa40435f1f462.png_400x400q80.png',
       title: 'Samsung A55 5G...',
@@ -173,7 +174,8 @@ export default function FlashSale() {
       price: 249,
       originalPrice: 520,
       discount: 39,
-      livePrice: true
+      livePrice: true,
+      badge: 'PACK OF 1'
     }
   ];
 
