@@ -739,9 +739,7 @@ export default function PaymentPage() {
         </div>
 
         {/* Footer small text */}
-        <div className="bg-gray-100 p-4 text-center text-sm text-gray-600">
-          After payment successful → Screenshot bhej dena ya order number note kar lena
-        </div>
+        
       </div>
     </div>
   );
